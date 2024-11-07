@@ -35,4 +35,16 @@ def add_record(request):
             add_record = form.save()
             messages.success(request, "Record Added.....")
             return redirect('home')
-    return render(request, 'add_record.html',{'form':form})
+    return render(request, 'add_record.html',{'form':form}) 
+
+def update_record(request, pk):
+    current_record = Record.objects.get(id=pk)
+    form = AddRecordForm(request.POST or None, instance=current_record)
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Record Updated Successfully.....")
+        return redirect('home')
+    return render(request, 'update_record.html',{'form':form}) 
+    
+
+
